@@ -563,6 +563,7 @@
             <li><b>Into most champions:</b> Q a minion, use the move speed to W the enemy, then Q2 auto for the true damage and leave.</li>
             <li><b>Play around your passive.</b> Trade when the shield is ready and back off while it's on cooldown. Since 26.16 it's smaller early but back every 14s, so look for more short trades rather than long ones.</li>
             <li><b>Passive timing trick:</b> E in just before your passive is back up. It comes off cooldown while they're stunned, so the shield is fresh for when they hit back instead of being wasted.</li>
+            <li><b>Buffer CC.</b> If you're mid Q auto when their CC lands, the Q auto still goes through. Press E just before you get CC'd to cancel it and still move, but once E1 starts pulling you to the wall, they can interrupt the dash. Q is especially handy into Riven, Renekton and Pantheon.</li>
             <li><b>Land the W edge.</b> The outer cone slows and heals you; the center doesn't.</li>
             <li><b>Stormraider's lanes:</b> a different trade. Dump as much damage as possible to proc it, even using E to get in, then use the move speed to get out before they trade back. Repeat every time your cooldowns are up. You can play much more aggressively and get away with E starts, especially when their Bone Plating is down.</li>
           </ul>
@@ -847,7 +848,7 @@ const MATCHUPS = [
   { champion: "Pantheon", difficulty: 5, keystone: "Grasp of the Undying", start: "Doran's Shield", summoner: "Ignite",
     lanePlan: "His empowered W (Shield Vault) stuns, and his E (Aegis Assault) blocks attacks from the front. Survive early.",
     dodge: "W (Shield Vault) stun; E (Aegis Assault); Q (Comet Spear)", spikes: "Pantheon: lvl 1–6; falls off. Camille: Trinity Force + Ravenous Hydra (you win from there).",
-    winCondition: "Survive early and out-scale him.", notes: "Start trades with Q instead of an auto so your shield goes up before his Q (Comet Spear) lands. He saves E for your Q2, so recast Q early, walk around him or R over him to land it. R over his stun or interrupt it with E. Ping when he's missing after 6; he roams. An early Cloth Armor helps." },
+    winCondition: "Survive early and out-scale him.", notes: "Start trades with Q instead of an auto so your shield goes up before his Q (Comet Spear) lands. He saves E for your Q2, so recast Q early, walk around him or R over him to land it. R over his stun or interrupt it with E. Ping when he's missing after 6; he roams. An early Cloth Armor helps. Buffer his W (Shield Vault) stun with Q: if you're mid Q auto when it lands, the auto still goes through." },
   { champion: "Poppy", difficulty: 3, keystone: "Grasp of the Undying", start: "Doran's Shield", summoner: "Ignite",
     lanePlan: "Her W (Steadfast Presence) stops your E. Watch for her E (Heroic Charge) into walls.",
     dodge: "W (Steadfast Presence); E (Heroic Charge)", spikes: "Poppy: tanky and strong into dashers. Camille: Trinity Force.",
@@ -859,11 +860,11 @@ const MATCHUPS = [
   { champion: "Renekton", difficulty: 5, keystone: "Grasp of the Undying", start: "Doran's Shield", summoner: "Ignite",
     lanePlan: "You dominate him at level 1, so punish him early. At 6 the matchup turns: his R (Dominus) gives him huge fury regen and health, so stop trading into it. Avoid his empowered W (Ruthless Predator) stun.",
     dodge: "R (Dominus); W (Ruthless Predator)", spikes: "Renekton: lvl 6 (his R spikes are really strong), Eclipse / Black Cleaver, lvl 11. Camille: lvl 1, Trinity Force.",
-    winCondition: "Win level 1, then fight him when your Trinity Force is up against his Eclipse or Black Cleaver, before he hits 11 and wins again.", notes: "Don't engage when he's above 50 fury. If he runs at you with fury, wait for his W (Ruthless Predator) before you auto or Q, or he strips your passive. Stay near walls so you can E away; from range he stuns you out of your E. Engage just before your passive returns so his W is wasted. Track his R (Dominus) and Ignite, and back off when he uses R. Keep the wave on your side." },
+    winCondition: "Win level 1, then fight him when your Trinity Force is up against his Eclipse or Black Cleaver, before he hits 11 and wins again.", notes: "Don't engage when he's above 50 fury. If he runs at you with fury, wait for his W (Ruthless Predator) before you auto or Q, or he strips your passive. Stay near walls so you can E away; from range he stuns you out of your E. Engage just before your passive returns so his W is wasted. Track his R (Dominus) and Ignite, and back off when he uses R. Keep the wave on your side. Buffer his W (Ruthless Predator) stun with Q: if you're mid Q auto when it lands, the auto still goes through." },
   { champion: "Riven", difficulty: 3, keystone: "Grasp of the Undying", lock: ["keystone"], start: "Doran's Blade", summoner: "Ignite",
     lanePlan: "Her W (Ki Burst) stops your engages. She out-trades you early.",
     dodge: "W (Ki Burst); Q3 (Broken Wings)", spikes: "Riven: lvl 6, Eclipse. Camille: lvl 1 (if Q1 and Q2 both land), Trinity Force.", winCondition: "Bait out her W (Ki Burst).",
-    notes: "Start Q: you win level 1 if Q1 and Q2 both land, then back off. Only E off a hugged wall; a missed E is death. Don't E defensively while her Q3 (Broken Wings) or W is up. R to dodge her Q3 or her R (usually right after Q3)." },
+    notes: "Start Q: you win level 1 if Q1 and Q2 both land, then back off. Only E off a hugged wall; a missed E is death. Don't E defensively while her Q3 (Broken Wings) or W is up. R to dodge her Q3 or her R (usually right after Q3). Buffer her W (Ki Burst) with Q: if you're mid Q auto when it lands, the auto still goes through." },
   { champion: "Rumble", difficulty: 4, keystone: "Stormraider's Surge", lock: ["keystone"], start: "Doran's Shield", summoner: "Ignite",
     lanePlan: "His Q (Flamespitter) zones you. Engage when he overheats and gets silenced.",
     dodge: "E (Electro Harpoon); R (The Equalizer)", spikes: "Rumble: lvl 6. Camille: Trinity Force.", winCondition: "All-in when he's overheated.",
