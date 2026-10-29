@@ -675,7 +675,7 @@ const BUILD = {
     // First two items are always one of these two orders
     ["Trinity Force → Ravenous Hydra", "Standard"],
     ["Ravenous Hydra → Trinity Force", "Hydra rush (Vladimir, Illaoi, Yorick)"],
-    ["Sterak's Gage / Death's Dance", "3rd item"]
+    ["Sterak's Gage / Death's Dance", "3rd item: Sterak's into true damage / CC, Death's Dance into burst"]
   ],
   boots: [
     ["Plated Steelcaps", "AD / auto-attack lanes"],
@@ -685,11 +685,12 @@ const BUILD = {
   ],
   // Always listed, even if your games don't show them
   extraBoots: ["Boots of Swiftness"],
+  extraSituational: ["Spear of Shojin"],
   situational: [
     ["Black Cleaver", "Armor shred vs. tanky teams"],
-    ["Spear of Shojin", "More ability haste for Q/E uptime"],
-    ["Sterak's Gage", "Burst and all-ins: the shield keeps you alive after you dive"],
-    ["Death's Dance", "AD teams: spreads their burst out over time"],
+    ["Spear of Shojin", "Health stackers, or tanky targets with less CC"],
+    ["Sterak's Gage", "True damage and CC: the tenacity is great into CC"],
+    ["Death's Dance", "Purely anti-burst; an alternative to Sterak's Gage"],
     ["Force of Nature", "Steady, sustained magic damage"],
     ["Maw of Malmortius", "Heavy AP burst"],
     ["Guardian Angel", "Fed and focused in fights"],
@@ -1073,7 +1074,7 @@ function activeBuild() {
   const hint = (list, name) => (list.find(([n]) => n.split(" / ").some(x => x === name)) || [])[1] || "";
   // Opening is fixed (Tri → Rav or Rav → Tri); only the 3rd item comes from your games
   const third = (d.thirdItem || []).filter(n => n !== "Trinity Force" && n !== "Ravenous Hydra");
-  const core = [...BUILD.core.slice(0, 2), third.length ? [third.slice(0, 2).join(" / "), "3rd item: pick by their damage (see Later items)"] : BUILD.core[2]];
+  const core = [...BUILD.core.slice(0, 2), third.length ? [third.slice(0, 2).join(" / "), "3rd item: Sterak's into true damage / CC, Death's Dance into burst"] : BUILD.core[2]];
   const skillOrder = d.skillOrder && d.skillOrder.length ? d.skillOrder : BUILD.skillOrder;
   // Max order = order in which Q/W/E reach 5 points (falls back to most points)
   const maxAt = s => { let n = 0; const i = skillOrder.findIndex(x => x === s && ++n === 5); return i < 0 ? 99 - skillOrder.filter(x => x === s).length : i; };
@@ -1084,7 +1085,7 @@ function activeBuild() {
     core,
     boots: [...new Set([...d.boots, ...BUILD.extraBoots])].map(n => [n, hint(BUILD.boots, n)]),
     // Never recommend anti-heal items, even if they show up in your games
-    situational: d.situational.filter(n => !ANTI_HEAL.includes(n)).map(n => [n, hint(BUILD.situational, n)]),
+    situational: [...new Set([...d.situational, ...BUILD.extraSituational])].filter(n => !ANTI_HEAL.includes(n)).map(n => [n, hint(BUILD.situational, n)]),
     summoners: BUILD.summoners,
     skillOrder,
     skillPriority: "R > " + ["Q", "W", "E"].sort((a, b) => maxAt(a) - maxAt(b)).join(" > "),
