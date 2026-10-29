@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Top Lane Fundamentals</title>
+<meta name="description" content="Top lane wave management: three-wave crashes, freezing, proxying, recalls and split pushing, from a Grandmaster-peak Camille one-trick.">
+<meta name="theme-color" content="#0f1419">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://holymolystar.github.io/camille-guide/top-lane.html">
+<meta property="og:title" content="Top Lane Fundamentals">
+<meta property="og:description" content="Wave management: three-wave crashes, freezing, proxying, recalls and split pushing.">
+<meta property="og:image" content="https://holymolystar.github.io/camille-guide/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230f1419'/%3E%3Cpolygon points='32,6 58,32 32,58 6,32' fill='none' stroke='%23d8b25a' stroke-width='5'/%3E%3Cpolygon points='32,20 44,32 32,44 20,32' fill='%234fd1e0'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0f1419; --bg-2: #161d25; --surface: #1b232d; --surface-2: #222c38;
+    --line: #2f3b49; --line-strong: #46556a; --text: #e6ebf0; --text-dim: #9aa7b6;
+    --accent: #d8b25a; --accent-2: #4fd1e0; --accent-ink: #11161c;
+    --shadow: 0 10px 30px rgba(0,0,0,.35); --radius: 6px;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #eef1f5; --bg-2: #e3e8ee; --surface: #ffffff; --surface-2: #f4f6f9;
+    --line: #d3dae3; --line-strong: #aeb9c7; --text: #18202a; --text-dim: #566375;
+    --accent: #a77a14; --accent-2: #0b8a99; --accent-ink: #ffffff;
+    --shadow: 0 10px 30px rgba(20,30,45,.10);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #eef1f5; --bg-2: #e3e8ee; --surface: #ffffff; --surface-2: #f4f6f9;
+      --line: #d3dae3; --line-strong: #aeb9c7; --text: #18202a; --text-dim: #566375;
+      --accent: #a77a14; --accent-2: #0b8a99; --accent-ink: #ffffff;
+      --shadow: 0 10px 30px rgba(20,30,45,.10);
+      color-scheme: light;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent-2); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -.01em; margin: 0; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .eyebrow { font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--accent); }
+  .section-lead { color: var(--text-dim); max-width: 70ch; margin: 12px 0 28px; }
+
+  .topbar { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .04em; color: var(--text); text-decoration: none; }
+  .brand-mark { width: 22px; height: 22px; position: relative; }
+  .brand-mark::before, .brand-mark::after { content: ""; position: absolute; inset: 0; border: 2px solid var(--accent); transform: rotate(45deg); }
+  .brand-mark::after { inset: 6px; background: var(--accent-2); border: 0; }
+  .nav { display: flex; gap: 18px; align-items: center; }
+  .nav a { color: var(--text-dim); text-decoration: none; font-size: .9rem; }
+  .nav a:hover { color: var(--text); }
+  .nav a.back { color: var(--accent); font-weight: 700; }
+  @media (max-width: 760px) { .nav a:not(.back) { display: none; } }
+  .icon-btn { background: var(--surface); color: var(--text); border: 1px solid var(--line); width: 36px; height: 36px;
+    border-radius: var(--radius); cursor: pointer; display: grid; place-items: center; }
+  .icon-btn:hover { border-color: var(--accent); }
+
+  .hero { padding: 80px 0 64px; border-top: 0; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.8rem); font-weight: 800; max-width: 16ch; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 60ch; margin: 18px 0 0; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .card h3 { font-size: 1.05rem; }
+  .card .num { font-size: .8rem; font-weight: 800; color: var(--accent); letter-spacing: .1em; }
+  .card ul, .card ol { margin: 10px 0 0; padding-left: 18px; color: var(--text-dim); font-size: .94rem; }
+  .card li { margin-bottom: 6px; }
+  .card li b { color: var(--text); }
+  .card p { color: var(--text-dim); margin: 10px 0 0; font-size: .94rem; }
+  .camille { margin-top: 16px; padding: 12px 14px; border-left: 3px solid var(--accent-2); background: var(--surface-2);
+    border-radius: 0 var(--radius) var(--radius) 0; font-size: .92rem; color: var(--text); }
+  .camille b { color: var(--accent-2); }
+  .steps { counter-reset: s; list-style: none; padding: 0 !important; }
+  .steps li { counter-increment: s; position: relative; padding-left: 34px; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: var(--accent-ink); font-size: .75rem; font-weight: 800; display: grid; place-items: center; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 44px; color: var(--text-dim); font-size: .86rem; background: var(--bg-2); }
+  footer ul { margin: 8px 0 0; padding-left: 18px; }
+  footer b { color: var(--text); }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./"><span class="brand-mark" aria-hidden="true"></span> STEEL SHADOW</a>
+    <nav class="nav">
+      <a href="#season">2026 changes</a>
+      <a href="#first-waves">First waves</a>
+      <a href="#crash">Crash</a>
+      <a href="#freeze">Freeze</a>
+      <a href="#proxy">Proxy</a>
+      <a href="#macro">Recall &amp; split</a>
+      <a class="back" href="./">← Camille guide</a>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle light and dark mode" title="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Top lane fundamentals</div>
+      <h1>Win the <span>wave</span>, win the lane</h1>
+      <p>How to play the first waves, when to crash, how to freeze, how to proxy and stop a proxy, plus what the 2026 season changed for top. General top-lane knowledge, with notes on how it applies to Camille.</p>
+    </div>
+  </section>
+
+  <!-- 2026 -->
+  <section id="season">
+    <div class="wrap">
+      <div class="eyebrow">This season</div>
+      <h2>What changed for top in 2026</h2>
+      <p class="section-lead">The season reworked top lane around a role quest and faster towers. Numbers are from the Season 1 launch; check the patch notes if something feels off.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Top lane role quest</h3>
+          <ul>
+            <li>Progress comes from CS, kills, towers in your lane and objectives.</li>
+            <li><b>Reward:</b> max level goes up to 20, plus bonus XP.</li>
+            <li><b>No Teleport taken:</b> you get Unleashed Teleport on a long (about 7 minute) cooldown.</li>
+            <li><b>Teleport taken:</b> your Teleport is upgraded with a shield when you land.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> you run Flash + Ignite every game, so the quest hands you a Teleport for the mid game anyway. Finish it early by staying in lane and farming.</div>
+        </div>
+        <div class="card">
+          <h3>Towers fall faster</h3>
+          <ul>
+            <li><b>Plates on every tower,</b> including inner and inhibitor towers (no extra gold added).</li>
+            <li><b>Crystalline Overgrowth:</b> towers take more damage the longer you keep hitting them.</li>
+            <li>Melee champions deal bonus damage to towers.</li>
+            <li>Demolish is now a three-hit passive.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> split pushing pays off more than ever. Every crashed wave is real tower damage.</div>
+        </div>
+        <div class="card">
+          <h3>Map and minions</h3>
+          <ul>
+            <li>Games start about 35 seconds faster.</li>
+            <li>Atakhan is gone, and Baron is back to a simple 20 minute spawn.</li>
+            <li><b>Patch 26.9:</b> melee minions deal slightly less damage to each other, so a third wave fits into a slow push more often.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRST WAVES -->
+  <section id="first-waves">
+    <div class="wrap">
+      <div class="eyebrow">Levels 1–3</div>
+      <h2>Playing out the first waves</h2>
+      <p class="section-lead">The first three waves decide who has priority, who hits level 2 first and whether your jungler can play top side. Decide your plan before minions arrive, not after.</p>
+      <div class="grid">
+        <div class="card">
+          <div class="num">01</div>
+          <h3>Before minions arrive</h3>
+          <ul>
+            <li><b>Pick a plan from the matchup.</b> Stronger levels 1–3: you'll push. Weaker: you'll let the waves come to you. Check the matchup table for your level 1 ability and start.</li>
+            <li><b>Hide in the lane brush</b> so they can't see your start or your first move.</li>
+            <li><b>Don't take free damage</b> walking up. Losing HP before the first trade decides the level 2 fight.</li>
+            <li><b>Know their jungler.</b> When the first gank comes depends on who it is: gank-heavy junglers can show up at level 3, while full-clear junglers like Hecarim almost never do a 3-camp gank.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <h3>Level 1</h3>
+          <ul>
+            <li><b>Whoever clears the first wave faster hits level 2 first.</b> If you're pushing, hit the caster minions as well as last-hitting.</li>
+            <li><b>Trade when they go for a last hit.</b> They have to walk up and auto a minion, so that's your window.</li>
+            <li><b>Mind the minion aggro.</b> Hitting them near their wave pulls their minions onto you, so keep trades short.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> trade with your passive up and step back while it's down. Your level 1 ability depends on the lane: W into Gangplank and Aatrox, Q or E into Irelia.</div>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <h3>The level 2 race</h3>
+          <ul>
+            <li><b>Level 2 comes after the first wave plus the first melee minion of the second wave.</b> Top's bonus XP can make it slightly earlier, so watch your XP bar.</li>
+            <li><b>The first to hit level 2 gets a free all-in window.</b> Use it straight away: they only have one ability.</li>
+            <li><b>Lost the race?</b> Back off until you hit 2 too. Don't stand in range of their two abilities with one.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="num">04</div>
+          <h3>Waves 2–3: winning lane</h3>
+          <ul>
+            <li><b>Keep the pressure</b> and push for the level 3 lead.</li>
+            <li><b>Crash wave 3,</b> the one with the cannon, into their tower.</li>
+            <li><b>Then use the time:</b> back early (cheater recall), or help your jungler at scuttle or an invade.</li>
+            <li><b>Cheater recall:</b> they're stuck clearing a big wave under tower, so you can buy your first component and walk back losing almost nothing.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="num">05</div>
+          <h3>Waves 2–3: losing lane</h3>
+          <ul>
+            <li><b>Let the waves come to you.</b> Don't fight for priority you can't win.</li>
+            <li><b>Set up a freeze</b> near your tower when the wave bounces back (see the freeze section below).</li>
+            <li><b>Ward the bush closest to you.</b> When you're losing, ward your own lane bush so you see the gank coming.</li>
+            <li><b>Call your jungler.</b> A frozen wave near your tower is an easy gank on them.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="num">06</div>
+          <h3>Common early mistakes</h3>
+          <ul>
+            <li><b>Overpushing</b> when their jungler is the type to gank early.</li>
+            <li><b>Taking a long trade inside their wave</b> at level 1.</li>
+            <li><b>Backing with the wave pushing toward you:</b> you come back to a freeze.</li>
+            <li><b>Chasing a kill under their tower</b> instead of crashing and taking plates.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRASH -->
+  <section id="crash">
+    <div class="wrap">
+      <div class="eyebrow">Wave states</div>
+      <h2>Three-wave crash</h2>
+      <p class="section-lead">An early-game play built on the first three waves: push the first two so they keep moving toward their side, then hard-shove the first cannon wave into their tower and recall.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>How to set it up</h3>
+          <ol class="steps">
+            <li><b>Waves 1 and 2: push from the first contact.</b> Use autos and abilities to win priority and thin their wave faster than they thin yours. These waves don't need to crash, they just need to keep moving toward their tower.</li>
+            <li><b>Wave 3, the first cannon wave: hard shove.</b> Clear their minions fast so your whole wave, cannon included, crashes fully under their tower.</li>
+            <li><b>Recall the moment it crashes.</b> Know what you're buying before you back.</li>
+            <li><b>Walk straight back.</b> Done right, the next wave meets in the middle or slightly on their side, and you arrive with full HP and an extra component.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>Why it works</h3>
+          <ul>
+            <li><b>The cannon buys you time.</b> It takes their tower the longest to kill, which is your recall window.</li>
+            <li><b>They're stuck under tower</b> clearing your wave, so they lose CS and can't follow you or back at the same time.</li>
+            <li><b>You lose little or nothing:</b> the next wave meets you when you're back.</li>
+            <li><b>The window isn't only for a recall:</b> you can also ward, roam or help your jungler at scuttle.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> this fits your push and roam style. Crash, then recall or show up mid or in the river.</div>
+        </div>
+        <div class="card">
+          <h3>When it goes wrong</h3>
+          <ul>
+            <li><b>You need priority.</b> If you're losing the lane, you can't push the first waves, so don't try it.</li>
+            <li><b>Their jungler can read it</b> and gank you while you push or on the walk back.</li>
+            <li><b>Wave 3 has to crash fully.</b> If it doesn't, the next waves push into your tower while you're gone.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Later in the game: slow push</h3>
+          <ul>
+            <li><b>Kill only the caster minions</b> so your melee minions stack over 2–3 waves, then crash it.</li>
+            <li><b>Use it</b> before a recall, a dive with your jungler, a roam or an objective.</li>
+            <li><b>Recall after you crash,</b> never while the wave is pushing toward you, or you come back to a freeze.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREEZE -->
+  <section id="freeze">
+    <div class="wrap">
+      <div class="eyebrow">Wave states</div>
+      <h2>Setting up a freeze</h2>
+      <p class="section-lead">Hold the wave just outside your tower so the enemy has to walk up into danger to farm.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>How to set it up</h3>
+          <ol class="steps">
+            <li><b>Get the wave to bounce to you,</b> e.g. right after a crash or when they shove.</li>
+            <li><b>Make their wave bigger than yours,</b> by about 3–4 minions, so it keeps pushing into you.</li>
+            <li><b>Last hit only.</b> No extra autos and no W on the wave.</li>
+            <li><b>Trim it:</b> if their wave gets too big and is about to walk into tower range, kill 1–2 extra minions.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>When</h3>
+          <ul>
+            <li><b>You're ahead:</b> deny their farm and XP and make them walk up to you.</li>
+            <li><b>You're in a bad lane:</b> farm safely near tower until you can shove.</li>
+            <li><b>Their Teleport is down</b> or they just recalled: freeze the wave they come back to.</li>
+            <li><b>Don't freeze</b> when their jungler is near your lane or they have long-range poke.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Breaking their freeze</h3>
+          <ol class="steps">
+            <li><b>Crash it with your jungler.</b> Best option.</li>
+            <li><b>Thin their wave,</b> then shove.</li>
+            <li><b>Take some damage</b> and shove anyway.</li>
+            <li><b>Roam</b> only if you really can't touch the wave.</li>
+          </ol>
+          <p>Never walk up alone, lose HP, then back off: you lose the wave and the HP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROXY -->
+  <section id="proxy">
+    <div class="wrap">
+      <div class="eyebrow">Advanced</div>
+      <h2>Proxying</h2>
+      <p class="section-lead">Farming the enemy waves between their outer and inner tower, so their minions never reach your side of the lane.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li><b>Crash your wave</b> into their outer tower first.</li>
+            <li><b>Walk around their tower</b> (through the side brush or the jungle edge) to the spot between their outer and inner tower.</li>
+            <li><b>Kill their new waves there</b> as they walk out, before they reach the lane.</li>
+            <li><b>Your own waves keep crashing into their tower,</b> because nothing meets them. Their laner has to stay and defend or chase you.</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h3>Why and when</h3>
+          <ul>
+            <li><b>Why:</b> you farm, they lose farm and plates, and you drag their laner and often their jungler to you. That opens the rest of the map for your team.</li>
+            <li><b>When:</b> you clear waves fast and sustain off them, you're stronger than your laner, and you know where their jungler is.</li>
+            <li><b>Before you go:</b> have an escape ready.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> rushing Ravenous Hydra lets you proxy and play near their tower, then sustain back up off the wave.</div>
+        </div>
+        <div class="card">
+          <h3>When to leave</h3>
+          <ul>
+            <li><b>Their jungler shows on the map</b> top side, or you lose track of them for too long.</li>
+            <li><b>Two of them walk at you:</b> leave before they're on you, not after.</li>
+            <li><b>Your HP is low</b> and the next wave won't heal you back up.</li>
+            <li><b>Their inner tower is about to fall</b> and you'd be farming in front of the inhibitor tower instead.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="margin-top:48px">How to stop a proxy</h2>
+      <p class="section-lead">A proxier is far from their tower and alone. Punish that instead of trying to out-farm them.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Stop it from starting</h3>
+          <ul>
+            <li><b>Walk with your wave</b> early so they can't farm it without fighting you and your minions.</li>
+            <li><b>Don't let them crash a wave</b> into you for free and walk off; match their push if you can.</li>
+            <li><b>Ward behind their tower</b> or the side brush so you see them walk to the proxy spot.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Punish it</h3>
+          <ol class="steps">
+            <li><b>Ping your jungler.</b> A proxier is deep, alone and far from safety: the easiest gank in the game.</li>
+            <li><b>Cut off the escape.</b> One of you comes from the lane, the other from the jungle.</li>
+            <li><b>Don't chase into their minions alone.</b> You take the wave's damage and they walk away.</li>
+          </ol>
+          <div class="camille"><b>Camille:</b> E off a wall between their towers and R them: your R stops the escape while your jungler arrives.</div>
+        </div>
+        <div class="card">
+          <h3>Don't fall behind while it happens</h3>
+          <ul>
+            <li><b>Farm their waves under your tower.</b> Their minions crash into you, so last-hit everything there.</li>
+            <li><b>Use the time:</b> roam or help your jungler while they're stuck far away.</li>
+            <li><b>Never trade your tower for their farm:</b> stay close enough to stop your plates from falling.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MACRO -->
+  <section id="macro">
+    <div class="wrap">
+      <div class="eyebrow">Macro</div>
+      <h2>Recalls, split pushing &amp; objectives</h2>
+      <p class="section-lead">Every wave state is a tool for one of these: a clean recall, a split push or being on time for an objective.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Recall timing</h3>
+          <ul>
+            <li><b>Back after a crash,</b> while they're stuck clearing.</li>
+            <li><b>Never back while the wave pushes to you;</b> you come back to a freeze.</li>
+            <li><b>After a kill,</b> decide: freeze to deny, or crash and back if they can return fast.</li>
+            <li><b>Can't crash?</b> Thin the wave and wait for a better moment.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Split push or group?</h3>
+          <p>There's no single rule. Weigh these every time:</p>
+          <ul>
+            <li><b>How far ahead are you?</b> With a big lead (say 30 kills to 12), it's usually better to group and force fights than to split.</li>
+            <li><b>Do they have heavy engage?</b> Your team can get engaged on 4v5 while you're away, so lean toward grouping.</li>
+            <li><b>Can your team hold a 4v5?</b> They need waveclear and disengage to stall while you push.</li>
+            <li><b>Who answers you in the side lane?</b> Split only if you win that 1v1 or can escape it.</li>
+            <li><b>Teleport and objectives:</b> split with Teleport up and no objective spawning; group when one is soon and your Teleport is down.</li>
+            <li><b>Stay safe:</b> push with a wave, and never past river without information on their jungler.</li>
+          </ul>
+          <div class="camille"><b>Camille:</b> leave your side lane and disappear from vision: just the threat that you might show up mid pressures their whole team.</div>
+        </div>
+        <div class="card">
+          <h3>Objective timeline</h3>
+          <ul>
+            <li><b>~60 seconds before:</b> have a big wave walking toward their side lane.</li>
+            <li><b>~45 seconds before:</b> finish the crash and set vision.</li>
+            <li><b>On spawn:</b> be with your team, or Teleport in.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Unofficial fan site.</b> Not endorsed by Riot Games. League of Legends is a trademark of Riot Games, Inc.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem("camille-theme"); } catch (e) {}
+  if (saved) document.documentElement.dataset.theme = saved;
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const current = document.documentElement.dataset.theme ||
+      (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    const next = current === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem("camille-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
