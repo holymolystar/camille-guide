@@ -294,6 +294,13 @@
   }
   .quick-input:focus { outline: none; border-color: var(--accent-2); }
   .qempty { color: var(--text-dim); font-size: .92rem; margin: 14px 0 0; }
+  .ban-list { list-style: none; margin: 12px 0 0; padding: 0; }
+  .ban-list li + li { border-top: 1px solid var(--line); }
+  .ban-list button { all: unset; box-sizing: border-box; width: 100%; display: flex; align-items: center; gap: 10px; padding: 8px 4px; cursor: pointer; border-radius: 6px; }
+  .ban-list button:hover, .ban-list button:focus-visible { background: var(--surface-2); }
+  .ban-list img { width: 30px; height: 30px; border-radius: 50%; }
+  .ban-list .ban-name { font-weight: 700; flex: 1; }
+  .ban-list .my-ban { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); border-radius: 4px; padding: 2px 6px; }
   .qcard { margin-top: 16px; }
   .qhead { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
   .qhead img { width: 56px; height: 56px; border-radius: 6px; border: 1px solid var(--line-strong); }
@@ -485,6 +492,11 @@
           <input id="quickInput" class="quick-input" list="champList" placeholder="Type a champion…" autocomplete="off" spellcheck="false">
           <datalist id="champList"></datalist>
           <div id="quickCard" aria-live="polite"></div>
+        </div>
+        <div class="card bans">
+          <h3>Ban options</h3>
+          <ul class="ban-list" id="banList"></ul>
+          <p class="note">Click a champion to open their matchup card.</p>
         </div>
         <div class="card diff-chart">
           <h3>Matchups by difficulty</h3>
@@ -1231,6 +1243,22 @@ function renderQuick() {
       </div>
     </div>`;
 }
+/* ---------- Ban options (first one is the ban I use) ---------- */
+const BANS = ["Jax", "Darius", "Mordekaiser", "Teemo", "Fiora"];
+function renderBans() {
+  $("#banList").innerHTML = BANS.map((c, i) => {
+    const m = MATCHUPS.find(x => x.champion === c);
+    return `<li><button type="button" data-ban="${esc(c)}">${champIcon(c).replace('class="ico ico-champ"', "")}<span class="ban-name">${esc(c)}</span>${i === 0 ? `<span class="my-ban">My ban</span>` : ""}${m ? diffCell(m.difficulty) : ""}</button></li>`;
+  }).join("");
+}
+$("#banList").addEventListener("click", e => {
+  const b = e.target.closest("[data-ban]");
+  if (!b) return;
+  $("#quickInput").value = b.dataset.ban;
+  renderQuick();
+  $("#quick").scrollIntoView({ behavior: "smooth", block: "nearest" });
+});
+
 $("#champList").innerHTML = MATCHUPS.map(m => `<option value="${esc(m.champion)}">`).join("");
 $("#quickInput").addEventListener("input", renderQuick);
 $("#quickCard").addEventListener("click", e => {
@@ -1275,6 +1303,7 @@ renderCombos();
 renderBuild();
 render();
 renderChart();
+renderBans();
 renderQuick();
 $("#statCount").textContent = MATCHUPS.length;
 $("#statPatch").textContent = SITE.patch.split(" ")[0];
